@@ -748,16 +748,17 @@
                         
                         // Only shift if no empty cells in the middle
                         if (!hasEmptyInMiddle && firstNonEmpty !== -1) {
-                            // Store the top tile
-                            const topTile = this.field[0][c];
+                            // Store the bottom tile
+                            const bottomTile = this.field[lastNonEmpty][c];
                             
-                            // Shift the column up
-                            for (let r = 0; r < rows - 1; r++) {
-                                this.field[r][c] = this.field[r + 1][c];
+                            // Shift tiles UP (от места клика к противоположному краю)
+                            // Все плитки сдвигаются ВВЕРХ, начиная снизу
+                            for (let r = lastNonEmpty; r > firstNonEmpty; r--) {
+                                this.field[r][c] = this.field[r - 1][c];
                             }
                             
-                            // Put the top tile at the bottom
-                            this.field[rows - 1][c] = topTile;
+                            // Put the bottom tile at the top (на место клика)
+                            this.field[firstNonEmpty][c] = bottomTile;
                         }
                     }
                 }
@@ -795,16 +796,17 @@
                         
                         // Only shift if no empty cells in the middle
                         if (!hasEmptyInMiddle && lastNonEmpty !== -1) {
-                            // Store the bottom tile
-                            const bottomTile = this.field[rows - 1][c];
+                            // Store the top tile
+                            const topTile = this.field[firstNonEmpty][c];
                             
-                            // Shift the column down
-                            for (let r = rows - 1; r > 0; r--) {
-                                this.field[r][c] = this.field[r - 1][c];
+                            // Shift tiles DOWN (от места клика к противоположному краю)
+                            // Все плитки сдвигаются ВНИЗ, начиная сверху
+                            for (let r = firstNonEmpty; r < lastNonEmpty; r++) {
+                                this.field[r][c] = this.field[r + 1][c];
                             }
                             
-                            // Put the bottom tile at the top
-                            this.field[0][c] = bottomTile;
+                            // Put the top tile at the bottom (на место клика)
+                            this.field[lastNonEmpty][c] = topTile;
                         }
                     }
                 }
@@ -842,16 +844,17 @@
                         
                         // Only shift if no empty cells in the middle
                         if (!hasEmptyInMiddle && firstNonEmpty !== -1) {
-                            // Store the left tile
-                            const leftTile = this.field[r][0];
+                            // Store the rightmost tile
+                            const rightTile = this.field[r][lastNonEmpty];
                             
-                            // Shift the row left
-                            for (let c = 0; c < cols - 1; c++) {
-                                this.field[r][c] = this.field[r][c + 1];
+                            // Shift tiles LEFT (от места клика к противоположному краю)
+                            // Все плитки сдвигаются ВЛЕВО, начиная справа
+                            for (let c = lastNonEmpty; c > firstNonEmpty; c--) {
+                                this.field[r][c] = this.field[r][c - 1];
                             }
                             
-                            // Put the left tile at the right
-                            this.field[r][cols - 1] = leftTile;
+                            // Put the rightmost tile at the left (на место клика)
+                            this.field[r][firstNonEmpty] = rightTile;
                         }
                     }
                 }
@@ -889,16 +892,17 @@
                         
                         // Only shift if no empty cells in the middle
                         if (!hasEmptyInMiddle && lastNonEmpty !== -1) {
-                            // Store the right tile
-                            const rightTile = this.field[r][cols - 1];
+                            // Store the leftmost tile
+                            const leftTile = this.field[r][firstNonEmpty];
                             
-                            // Shift the row right
-                            for (let c = cols - 1; c > 0; c--) {
-                                this.field[r][c] = this.field[r][c - 1];
+                            // Shift tiles RIGHT (от места клика к противоположному краю)
+                            // Все плитки сдвигаются ВПРАВО, начиная слева
+                            for (let c = firstNonEmpty; c < lastNonEmpty; c++) {
+                                this.field[r][c] = this.field[r][c + 1];
                             }
                             
-                            // Put the right tile at the left
-                            this.field[r][0] = rightTile;
+                            // Put the leftmost tile at the right (на место клика)
+                            this.field[r][lastNonEmpty] = leftTile;
                         }
                     }
                 }
